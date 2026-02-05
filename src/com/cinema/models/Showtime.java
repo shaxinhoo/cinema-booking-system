@@ -6,29 +6,17 @@ import java.time.LocalTime;
 
 public class Showtime {
     private int id;
-    private int movieId;
     private LocalDate showDate;
     private LocalTime showTime;
-    private BigDecimal price;
-    private int availableSeats;
+    private BigDecimal basePrice;
+    private String format;
+
     private String movieTitle;
-
-    public Showtime() {}
-
-    public Showtime(int movieId, LocalDate showDate, LocalTime showTime,
-                    BigDecimal price, int availableSeats) {
-        this.movieId = movieId;
-        this.showDate = showDate;
-        this.showTime = showTime;
-        this.price = price;
-        this.availableSeats = availableSeats;
-    }
+    private String cinemaName;
+    private String hallName;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
-
-    public int getMovieId() { return movieId; }
-    public void setMovieId(int movieId) { this.movieId = movieId; }
 
     public LocalDate getShowDate() { return showDate; }
     public void setShowDate(LocalDate showDate) { this.showDate = showDate; }
@@ -36,18 +24,24 @@ public class Showtime {
     public LocalTime getShowTime() { return showTime; }
     public void setShowTime(LocalTime showTime) { this.showTime = showTime; }
 
-    public BigDecimal getPrice() { return price; }
-    public void setPrice(BigDecimal price) { this.price = price; }
+    public BigDecimal getBasePrice() { return basePrice; }
+    public void setBasePrice(BigDecimal basePrice) { this.basePrice = basePrice; }
 
-    public int getAvailableSeats() { return availableSeats; }
-    public void setAvailableSeats(int availableSeats) { this.availableSeats = availableSeats; }
+    public String getFormat() { return format; }
+    public void setFormat(String format) { this.format = format; }
 
     public String getMovieTitle() { return movieTitle; }
     public void setMovieTitle(String movieTitle) { this.movieTitle = movieTitle; }
 
-    @Override
-    public String toString() {
-        return String.format("[%d] %s | %s %s | Price: %.0f KZT | Seats: %d",
-                id, movieTitle, showDate, showTime, price, availableSeats);
+    public String getCinemaName() { return cinemaName; }
+    public void setCinemaName(String cinemaName) { this.cinemaName = cinemaName; }
+
+    public String getHallName() { return hallName; }
+    public void setHallName(String hallName) { this.hallName = hallName; }
+
+    @Override public String toString() {
+        return "Showtime{id=" + id + ", date=" + showDate + ", time=" + showTime +
+                ", price=" + basePrice + ", format=" + format +
+                ", movie='" + movieTitle + "', cinema='" + cinemaName + "', hall='" + hallName + "'}";
     }
 }
