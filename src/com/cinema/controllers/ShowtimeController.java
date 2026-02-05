@@ -1,57 +1,22 @@
 package com.cinema.controllers;
 
-import com.cinema.models.Showtime;
 import com.cinema.repositories.ShowtimeRepository;
-
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
+import com.cinema.security.AuthorizationService;
 
 public class ShowtimeController {
-    private ShowtimeRepository showtimeRepository;
+    private final ShowtimeRepository repo;
+    private final AuthorizationService authz;
 
-    public ShowtimeController() {
-        this.showtimeRepository = new ShowtimeRepository();
+    public ShowtimeController(ShowtimeRepository repo, AuthorizationService authz) {
+        this.repo = repo;
+        this.authz = authz;
     }
 
-    public Showtime addShowtime(int movieId, LocalDate date, LocalTime time,
-                                BigDecimal price, int seats) {
-        try {
-            Showtime showtime = new Showtime(movieId, date, time, price, seats);
-            return showtimeRepository.create(showtime);
-        } catch (SQLException e) {
-            System.out.println("Error creating showtime: " + e.getMessage());
-            return null;
-        }
+    public java.util.List<com.cinema.models.Showtime> getShowtimes() throws Exception {
+        return repo.findAllDetailed();
     }
 
-    public List<Showtime> getShowtimesByMovie(int movieId) {
-        try {
-            return showtimeRepository.findByMovieId(movieId);
-        } catch (SQLException e) {
-            System.out.println("Error loading showtimes: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public List<Showtime> getAllShowtimes() {
-        try {
-            return showtimeRepository.findAll();
-        } catch (SQLException e) {
-            System.out.println("Error loading showtimes: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public boolean deleteShowtime(int id) {
-        try {
-            showtimeRepository.delete(id);
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Error deleting showtime: " + e.getMessage());
-            return false;
-        }
+    public void listShowtimes() throws Exception {
+        repo.findAllDetailed().forEach(System.out::println);
     }
 }

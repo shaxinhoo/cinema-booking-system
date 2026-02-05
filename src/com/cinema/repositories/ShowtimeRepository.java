@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowtimeRepository {
+
     public List<Showtime> findAllDetailed() throws SQLException {
         String sql = "SELECT * FROM v_showtimes_detail ORDER BY show_date, show_time";
         List<Showtime> list = new ArrayList<>();
@@ -28,5 +29,36 @@ public class ShowtimeRepository {
             }
         }
         return list;
+    }
+
+    // ✅ НОВОЕ: нужно для покупки
+    public Showtime findById(int showtimeId) throws SQLException {
+        String sql = "SELECT id, hall_id, cinema_id, movie_id, show_date, show_time, base_price, format " +
+                "FROM showtimes WHERE id=?";
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, showtimeId);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) return null;
+
+            Showtime s = new Showtime();
+            s.setId(rs.getInt("id"));
+            // Эти поля уже есть в твоей модели Showtime из Dev1? Если нет — добавь сеттеры/поля:
+            // movieId, hallId, cinemaId
+            // Если ты их не добавлял — см. пункт 1.1 ниже
+            try {
+                s.getClass().getMethod("setHallId", int.class).invoke(s, rs.getInt("hall_id"));
+                s.getClass().getMethod("setMovieId", int.class).invoke(s, rs.getInt("movie_id"));
+                s.getClass().getMethod("setCinemaId", int.class).invoke(s, rs.getInt("cinema_id"));
+            } catch (Exception ignore) {
+                // если у тебя в модели нет этих полей — добавь их (см. ниже)
+            }
+
+            s.setShowDate(rs.getDate("show_date").toLocalDate());
+            s.setShowTime(rs.getTime("show_time").toLocalTime());
+            s.setBasePrice(rs.getBigDecimal("base_price"));
+            s.setFormat(rs.getString("format"));
+            return s;
+        }
     }
 }

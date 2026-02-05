@@ -10,6 +10,9 @@ public class Showtime {
     private LocalTime showTime;
     private BigDecimal basePrice;
     private String format;
+    private int movieId;
+    private int hallId;
+    private int cinemaId;
 
     private String movieTitle;
     private String cinemaName;
@@ -17,6 +20,15 @@ public class Showtime {
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+
+    public int getMovieId() { return movieId; }
+    public void setMovieId(int movieId) { this.movieId = movieId; }
+
+    public int getHallId() { return hallId; }
+    public void setHallId(int hallId) { this.hallId = hallId; }
+
+    public int getCinemaId() { return cinemaId; }
+    public void setCinemaId(int cinemaId) { this.cinemaId = cinemaId; }
 
     public LocalDate getShowDate() { return showDate; }
     public void setShowDate(LocalDate showDate) { this.showDate = showDate; }
