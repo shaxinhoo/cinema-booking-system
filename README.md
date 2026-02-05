@@ -1,4 +1,4 @@
-# Cinema Booking System - Iteration 1
+# Cinema Booking System
 
 ## Project Overview
 A console-based cinema booking system that manages movies and showtimes with database integration.
