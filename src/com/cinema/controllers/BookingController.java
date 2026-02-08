@@ -28,7 +28,7 @@ public class BookingController {
         System.out.println("Ticket added.");
     }
 
-    // ✅ JOIN endpoint (главное требование)
+    // вот здеся JOIN endpoint
     public void getFullBookingDescription(int bookingId) throws Exception {
         authz.require(Role.ADMIN, Role.MANAGER, Role.EDITOR, Role.CUSTOMER);
         var dto = service.getFullBookingDescription(bookingId);

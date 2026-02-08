@@ -51,20 +51,17 @@ public class ConsoleView {
     private void splash() {
         System.out.println("========================================");
         System.out.println("        CINEMA BOOKING SYSTEM");
-        System.out.println("     (Chaplin / Kinopark style)");
+        System.out.println("     (Chaplin / Kinopark)");
         System.out.println("========================================");
         System.out.println("Tip: admin login from seed:");
         System.out.println("     admin@cinema.kz / admin123");
         System.out.println();
     }
 
-    // =========================
-    // AUTH
-    // =========================
     private void authMenu() {
         System.out.println("\n=== Вход / Регистрация ===");
         System.out.println("1) Войти");
-        System.out.println("2) Зарегистрироваться (CUSTOMER)");
+        System.out.println("2) Зарегистрироваться");
         System.out.println("0) Выход");
 
         int ch = readInt("Выберите: ");
@@ -89,9 +86,6 @@ public class ConsoleView {
         }
     }
 
-    // =========================
-    // MAIN MENU
-    // =========================
     private void mainMenu() {
         Role role = Role.valueOf(SecurityContext.getCurrentUser().getRole().toUpperCase());
 
@@ -131,9 +125,6 @@ public class ConsoleView {
         }
     }
 
-    // =========================
-    // Showtimes (pretty)
-    // =========================
     private void showShowtimesBeautiful() throws Exception {
         List<Showtime> list = showtimes.getShowtimes(); // ✅ метод должен возвращать List<Showtime>
 
@@ -142,7 +133,6 @@ public class ConsoleView {
             return;
         }
 
-        // Группируем по дате
         Map<String, List<Showtime>> byDate = list.stream()
                 .collect(Collectors.groupingBy(s -> s.getShowDate().format(dateFmt), TreeMap::new, Collectors.toList()));
 
@@ -156,7 +146,6 @@ public class ConsoleView {
     }
 
     private void printShowtimeTable(List<Showtime> showtimes) {
-        // Шапка
         System.out.printf("%-6s %-6s %-22s %-20s %-16s %-8s %-8s%n",
                 "ID", "Время", "Фильм", "Кинотеатр", "Зал", "Формат", "Цена");
 
@@ -175,9 +164,6 @@ public class ConsoleView {
         }
     }
 
-    // =========================
-    // Movies (pretty)
-    // =========================
     private void showMoviesBeautiful() throws Exception {
         List<Movie> list = movies.getMovies(); // ✅ метод должен возвращать List<Movie>
 
@@ -203,9 +189,6 @@ public class ConsoleView {
         }
     }
 
-    // =========================
-    // Purchase wizard
-    // =========================
     private void buyTicketsWizard() throws Exception {
         System.out.println("\n=== ПОКУПКА БИЛЕТОВ ===");
         System.out.println("Шаг 1) Выберите Showtime ID из 'Афиша / Сеансы'");
@@ -232,24 +215,17 @@ public class ConsoleView {
         if (ch == 1) booking.getFullBookingDescription(bookingId);
     }
 
-    // =========================
-    // JOIN receipt
-    // =========================
     private void joinReceipt() throws Exception {
-        System.out.println("\n=== ПОЛНЫЙ ЧЕК (JOIN) ===");
+        System.out.println("\n=== ПОЛНЫЙ ЧЕК ===");
         int bookingId = readInt("Введите bookingId: ");
         booking.getFullBookingDescription(bookingId);
     }
 
-    // =========================
-    // Helpers
-    // =========================
     private String read(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine().trim();
     }
 
-    // без настоящего скрытия (консоль IDE часто не поддерживает), но оставляем API
     private String readHidden(String prompt) {
         return read(prompt);
     }
@@ -273,7 +249,6 @@ public class ConsoleView {
 
     private String money(BigDecimal v) {
         if (v == null) return "-";
-        // KZT style without decimals in UI
         return v.setScale(0, BigDecimal.ROUND_HALF_UP).toPlainString() + " ₸";
     }
 }

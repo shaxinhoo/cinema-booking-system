@@ -15,7 +15,6 @@ public class BookingService {
     public int createBooking(int userId, int showtimeId) throws Exception {
         new Validator<Integer>().rule(x -> x > 0, "Invalid showtimeId").validate(showtimeId);
 
-        // ✅ Проверяем, что сеанс существует
         var st = showtimes.findById(showtimeId);
         if (st == null) throw new IllegalArgumentException("Showtime not found");
 
@@ -23,7 +22,6 @@ public class BookingService {
         return bookings.create(userId, showtimeId, code).getId();
     }
 
-    // ✅ hallId теперь НЕ надо передавать — берём из showtimes
     public void addTicket(int bookingId, int showtimeId, int row, int seat) throws Exception {
         new Validator<Integer>().rule(x -> x > 0, "Row must be > 0").validate(row);
         new Validator<Integer>().rule(x -> x > 0, "Seat must be > 0").validate(seat);

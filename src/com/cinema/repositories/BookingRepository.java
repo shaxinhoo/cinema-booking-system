@@ -32,7 +32,7 @@ public class BookingRepository {
         }
     }
 
-    // JOIN endpoint
+    // вот здеся реализация JOIN
     public FullBookingDescription getFullBookingDescription(int bookingId) throws SQLException {
         String headSql =
                 "SELECT b.*, " +

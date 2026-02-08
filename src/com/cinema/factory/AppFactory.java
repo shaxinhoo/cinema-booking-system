@@ -7,7 +7,7 @@ import com.cinema.services.*;
 
 public class AppFactory {
 
-    // repositories
+    // вот здеся реализация Factory паттерна
     public UserRepository userRepository() { return new UserRepository(); }
     public MovieRepository movieRepository() { return new MovieRepository(); }
     public ShowtimeRepository showtimeRepository() { return new ShowtimeRepository(); }
@@ -16,14 +16,12 @@ public class AppFactory {
     public SeatRepository seatRepository() { return new SeatRepository(); }
     public TicketRepository ticketRepository() { return new TicketRepository(); }
 
-    // services
     public PasswordHasher passwordHasher() { return new PasswordHasher(); }
     public AuthService authService() { return new AuthService(); }
     public AuthorizationService authorizationService() { return new AuthorizationService(); }
     public CategoryService categoryService() { return new CategoryService(); }
     public BookingService bookingService() { return new BookingService(); }
 
-    // controllers
     public AuthController authController() { return new AuthController(authService()); }
     public MovieController movieController() { return new MovieController(movieRepository(), authorizationService()); }
     public ShowtimeController showtimeController() { return new ShowtimeController(showtimeRepository(), authorizationService()); }
